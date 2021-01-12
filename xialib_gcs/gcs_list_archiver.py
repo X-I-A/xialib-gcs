@@ -4,6 +4,7 @@ import zipfile
 import hashlib
 from typing import List, Dict
 from functools import reduce
+import gcsfs
 from xialib.archiver import ListArchiver
 from xialib_gcs.gcs_storer import GCSStorer
 
@@ -12,15 +13,11 @@ class GCSListArchiver(ListArchiver):
 
     bucket-name will be "project_id-topic_id". Each table will have its own directory
     """
-    def __init__(self, storer=GCSStorer(), **kwargs):
+    def __init__(self, fs: gcsfs.GCSFileSystem, **kwargs):
         super().__init__()
-        if not isinstance(storer, GCSStorer):
-            self.logger.error("storer must be type of GCSStorer", extra=self.log_context)
-            raise TypeError("XIA-000018")
-        else:
-            self.project_id = storer.project_id
-            self.storer = storer
-            self.data_store = 'gcs'
+        self.storer = GCSStorer(fs=fs)
+        self.project_id = self.storer.project_id
+        self.data_store = 'gcs'
 
     def _get_filename(self, merge_key):
         return hashlib.md5(merge_key.encode()).hexdigest()[:4] + '-' + merge_key + '.zst'
