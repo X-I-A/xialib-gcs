@@ -1,11 +1,13 @@
 import os
 import pytest
+import gcsfs
 from xialib_gcs import GCSStorer
 
 
 @pytest.fixture(scope='module')
 def storer():
-    storer = GCSStorer()
+    fs = gcsfs.GCSFileSystem()
+    storer = GCSStorer(fs=fs)
     yield storer
 
 def test_simple_flow(storer: GCSStorer):

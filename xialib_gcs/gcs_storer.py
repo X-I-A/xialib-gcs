@@ -10,9 +10,12 @@ class GCSStorer(IOStorer):
     """
     store_types = ['gcs']
 
-    def __init__(self, **kwargs):
+    def __init__(self, fs: gcsfs.GCSFileSystem, **kwargs):
         super().__init__()
-        self.fs = gcsfs.GCSFileSystem(**kwargs)
+        if not isinstance(fs, gcsfs.GCSFileSystem):
+            self.logger.error("GCSStorer Must have GCS based Filesystem")
+            raise TypeError("XIA-000032")
+        self.fs = fs
         self.project_id = google.auth.default()[1]
 
     def exists(self, location: str):
