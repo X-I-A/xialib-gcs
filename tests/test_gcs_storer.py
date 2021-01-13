@@ -6,8 +6,7 @@ from xialib_gcs import GCSStorer
 
 @pytest.fixture(scope='module')
 def storer():
-    fs = gcsfs.GCSFileSystem()
-    storer = GCSStorer(fs=fs)
+    storer = GCSStorer()
     yield storer
 
 def test_simple_flow(storer: GCSStorer):

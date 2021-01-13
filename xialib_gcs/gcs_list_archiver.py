@@ -13,8 +13,8 @@ class GCSListArchiver(ListArchiver):
 
     bucket-name will be "project_id-topic_id". Each table will have its own directory
     """
-    def __init__(self, fs: gcsfs.GCSFileSystem, **kwargs):
-        super().__init__()
+    def __init__(self, fs: GCSStorer(), **kwargs):
+        super().__init__(**kwargs)
         self.storer = GCSStorer(fs=fs)
         self.project_id = self.storer.project_id
         self.data_store = 'gcs'
