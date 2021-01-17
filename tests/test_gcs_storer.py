@@ -32,3 +32,10 @@ def test_simple_flow(storer: GCSStorer):
 
     storer.write(data_copy1, dest_file)
     storer.remove(dest_file)
+
+def test_init_2():
+    storer = GCSStorer(fs=gcsfs.GCSFileSystem())
+
+def test_exceptions():
+    with pytest.raises(TypeError):
+        storer = GCSStorer(fs=object())

@@ -79,4 +79,4 @@ def test_exceptions(archiver):
     with pytest.raises(FileNotFoundError):
         a2 = archiver.set_current_topic_table('error', 'error')
     with pytest.raises(TypeError):
-        a2 = GCSListArchiver(storer=object())
+        a2 = GCSListArchiver(fs=object())
