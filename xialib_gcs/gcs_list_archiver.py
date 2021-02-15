@@ -6,16 +6,16 @@ from typing import List, Dict
 from functools import reduce
 import gcsfs
 from xialib.archiver import ListArchiver
-from xialib_gcs.gcs_storer import GCSStorer
+from xialib_gcs.gcs_storer import GcsStorer
 
 class GCSListArchiver(ListArchiver):
     """List archiver use Google Cloud Storage to save archive data
 
     bucket-name will be "project_id-topic_id". Each table will have its own directory
     """
-    def __init__(self, fs: GCSStorer, **kwargs):
+    def __init__(self, fs: GcsStorer, **kwargs):
         super().__init__(**kwargs)
-        if not isinstance(fs, GCSStorer):
+        if not isinstance(fs, GcsStorer):
             self.logger.error("storer must be type of RWStorer", extra=self.log_context)
             raise TypeError("XIA-000018")
         self.storer = fs

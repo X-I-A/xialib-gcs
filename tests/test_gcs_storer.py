@@ -1,15 +1,15 @@
 import os
 import pytest
 import gcsfs
-from xialib_gcs import GCSStorer
+from xialib_gcs import GcsStorer
 
 
 @pytest.fixture(scope='module')
 def storer():
-    storer = GCSStorer()
+    storer = GcsStorer()
     yield storer
 
-def test_simple_flow(storer: GCSStorer):
+def test_simple_flow(storer: GcsStorer):
     storer.mkdir(storer.join("gs://xialib-gcp-test", "gcs-storer"))
     file_path = storer.join("gs://xialib-gcp-test", "gcs-storer", "schema.json")
     dest_file = storer.join("gs://xialib-gcp-test", "gcs-storer", "schema1.json")
@@ -34,8 +34,8 @@ def test_simple_flow(storer: GCSStorer):
     storer.remove(dest_file)
 
 def test_init_2():
-    storer = GCSStorer(fs=gcsfs.GCSFileSystem())
+    storer = GcsStorer(fs=gcsfs.GCSFileSystem())
 
 def test_exceptions():
     with pytest.raises(TypeError):
-        storer = GCSStorer(fs=object())
+        storer = GcsStorer(fs=object())

@@ -4,7 +4,7 @@ import google.auth
 import gcsfs
 from xialib.storer import IOStorer
 
-class GCSStorer(IOStorer):
+class GcsStorer(IOStorer):
     """Google Cloud Plateform Based
     """
     store_types = ['gcs']

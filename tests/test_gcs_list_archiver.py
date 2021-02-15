@@ -4,7 +4,7 @@ import datetime
 import json
 import pytest
 import gcsfs
-from xialib_gcs import GCSStorer, GCSListArchiver
+from xialib_gcs import GcsStorer, GCSListArchiver
 
 
 def get_current_timestamp():
@@ -22,7 +22,7 @@ field_list_01 = ['id', 'first_name', 'city', 'height', 'children', 'preferred_co
 
 @pytest.fixture(scope='module')
 def archiver():
-    fs = GCSStorer()
+    fs = GcsStorer()
     archiver = GCSListArchiver(fs=fs)
     archiver.set_current_topic_table('test-001', 'person_complex')
     yield archiver
