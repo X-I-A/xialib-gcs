@@ -8,6 +8,7 @@ class GcsStorer(IOStorer):
     """Google Cloud Plateform Based
     """
     store_types = ['gcs']
+    path_separator = "/"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -22,6 +23,11 @@ class GcsStorer(IOStorer):
 
     def exists(self, location: str):
         return self.fs.exists(location)
+
+    def walk_file(self, root_path):
+        for root, dirs, files in self.fs.walk(root_path, topdown=False):
+            for name in files:
+                yield self.join(root, name)
 
     def join(self, *args):
         return '/'.join([item for item in args])
@@ -60,4 +66,3 @@ class GcsStorer(IOStorer):
     def get_io_wb_stream(self, location: str):
         with self.fs.open(location, 'wb') as fp:
             yield fp
-
