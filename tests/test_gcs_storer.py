@@ -11,6 +11,7 @@ def storer():
 
 def test_simple_flow(storer: GcsStorer):
     storer.mkdir(storer.join("gs://xialib-gcp-test", "gcs-storer"))
+    dir_path = storer.join("gs://xialib-gcp-test", "gcs-storer")
     file_path = storer.join("gs://xialib-gcp-test", "gcs-storer", "schema.json")
     dest_file = storer.join("gs://xialib-gcp-test", "gcs-storer", "schema1.json")
     assert storer.exists(file_path)
@@ -31,6 +32,13 @@ def test_simple_flow(storer: GcsStorer):
     assert not storer.remove(dest_file)
 
     storer.write(data_copy1, dest_file)
+
+    counter = 0
+    for file_item in storer.walk_file(dir_path):
+        assert storer.exists(file_item)
+        counter += 1
+    assert counter == 3
+
     storer.remove(dest_file)
 
 def test_init_2():

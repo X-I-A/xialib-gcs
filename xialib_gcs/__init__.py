@@ -3,4 +3,4 @@ from xialib_gcs.gcs_list_archiver import GCSListArchiver
 
 __all__ = ['GcsStorer', 'GCSListArchiver']
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
